@@ -3,9 +3,15 @@ import { View, TextInput, StyleSheet, Button, Modal } from 'react-native';
 
 const GoalInput = props => {
   const [enteredGoal, setEnteredGoal] = useState('');
+
   const goalInputHandler = enteredText => {
     setEnteredGoal(enteredText);
   };
+
+  const onAddHandler = () => {
+    props.onAdd(enteredGoal);
+    setEnteredGoal('');
+  }
 
   return (
     <Modal visible={props.visible} animationType='slide'>
@@ -16,14 +22,21 @@ const GoalInput = props => {
           value={enteredGoal}
           onChangeText={goalInputHandler}
         />
-        <Button
-          title='Add'
-          onPress={props.onAdd.bind(this, enteredGoal)}
-        />
-        <Button
-          title='Cancle'
-          onPress={props.onCancle}
-        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button
+              title='ADD'
+              onPress={onAddHandler}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title='CANCLE'
+              color='red'
+              onPress={props.onCancle}
+            />
+          </View>
+        </View>
       </View>
     </Modal>
   );
@@ -43,6 +56,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '60%'
+  },
+  button: {
+    width: '40%'
   }
 });
 
